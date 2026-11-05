@@ -43,3 +43,15 @@ node tools/build.mjs
 npx serve .
 # 或任意静态服务器，例如 python -m http.server
 ```
+
+## 部署到 Hostinger
+
+站点是纯静态的，不需要 Node 环境，也不需要构建。
+
+1. hPanel → 网站 → Git，仓库填 `https://github.com/hhcnmtkrt8-lab/jolytool.git`，分支 `main`，目标目录 `public_html`。
+2. 首次拉取后直接访问域名即可。`index.html` 在仓库根目录，可直接作为站点根。
+3. 后续更新：hPanel 点「拉取」，或在服务器目录执行 `git pull`。
+4. 根目录 `.htaccess` 已配置：自定义 404、gzip 压缩、静态缓存策略，并屏蔽 `.git` 与 `tools/` 目录。
+5. `tools/` 只是本地生成页面用，线上不参与运行，可不部署。
+
+注意：所有页面已写好 `canonical` 与 `hreflang`，指向 `https://www.asiagaopeng.com`。若先用临时域名预览，搜索引擎收录前记得把域名定好。
