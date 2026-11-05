@@ -15,7 +15,7 @@
     </linearGradient>
     <filter id="soft"><feGaussianBlur stdDeviation="16"/></filter>
   </defs>
-  <rect width="800" height="800" fill="#f1eee6"/>
+  <rect width="800" height="800" fill="#191d21"/>
   <g transform="translate(0 -51) scale(1)">
 
   <rect x="120" y="500" width="560" height="180" rx="4" fill="url(#board)"/>
@@ -26,7 +26,7 @@
   <circle cx="620" cy="640" r="5" fill="#a9a49a"/>
   <ellipse cx="400" cy="694" rx="250" ry="18" fill="#1b1e22" opacity="0.12" filter="url(#soft)"/>
 
-  <g transform="rotate(-3 400 400)">
+  <g transform="translate(0 34) rotate(-3 400 400)">
     <path d="M250 230 V470 A150 40 0 0 1 550 470 V230 Z" fill="url(#side)"/>
     <path d="M250 230 V470 A150 40 0 0 1 550 470 V230 Z" fill="url(#mesh)" opacity="0.9"/>
     <ellipse cx="400" cy="230" rx="150" ry="40" fill="#fdfbf6" stroke="#bcb3a0" stroke-width="2"/>

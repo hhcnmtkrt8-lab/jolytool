@@ -15,7 +15,7 @@
     </radialGradient>
     <filter id="soft"><feGaussianBlur stdDeviation="16"/></filter>
   </defs>
-  <rect width="800" height="800" fill="#f1eee6"/>
+  <rect width="800" height="800" fill="#191d21"/>
   <g transform="translate(-57 -65) scale(1.04)">
   <ellipse cx="325" cy="612" rx="155" ry="24" fill="#1b1e22" opacity="0.10" filter="url(#soft)"/>
 

@@ -1,8 +1,9 @@
-/* Site content. All copy is taken from the existing asiagaopeng.com site
+﻿/* Site content. All copy is taken from the existing asiagaopeng.com site
    (EN + CN), with only formatting/typographic normalisation. */
 
 export const IMAGES = {
-  meshRolls: "img/mesh-rolls.jpg",
+  hero: "img/mesh-hero.jpg",
+  macro: "img/mesh-macro.jpg",
 };
 
 
@@ -433,6 +434,16 @@ export const T = {
       "A professional manufacturer of fiberglass self-adhesive tape, alkali-resistant fiberglass mesh, metal corner tape, paper tape and wall patch. 80% of our output is exported to customers worldwide.",
     heroCta: "Explore products",
     heroCta2: "Talk to us",
+    heroSpec: [
+      { t: "ISO 9001", s: "Quality system" },
+      { t: "Since 2004", s: "Rugao, Jiangsu" },
+      { t: "80%", s: "Output exported" },
+      { t: "20+", s: "Countries served" },
+    ],
+    macroEyebrow: "Material",
+    macroText:
+      "C-glass and E-glass yarn, woven and coated in-house, then slit to the width each market expects.",
+    macroMeta: ["Fiberglass mesh", "8x8 – 10x10 / inch", "60 – 160 g/m²"],
     facts: [
       { value: "2004", label: "Year established, Nantong, Jiangsu" },
       { value: "20+", label: "Years of production experience" },
@@ -536,6 +547,15 @@ export const T = {
       "专业生产玻璃纤维自粘胶带、耐碱玻纤网格布、金属护角带、接缝纸带与金属补墙板。八成产品出口海外，服务全球客商。",
     heroCta: "浏览产品",
     heroCta2: "联系我们",
+    heroSpec: [
+      { t: "ISO 9001", s: "品质管理体系" },
+      { t: "始于 2004", s: "江苏如皋" },
+      { t: "80%", s: "产品出口" },
+      { t: "20+", s: "合作国家" },
+    ],
+    macroEyebrow: "材料",
+    macroText: "C-glass 与 E-glass 纱线，自有织造与涂覆，再按各市场的需求分切成型。",
+    macroMeta: ["玻纤网格布", "8x8 – 10x10 / 英寸", "60 – 160 g/m²"],
     facts: [
       { value: "2004", label: "成立于江苏南通如皋" },
       { value: "20+", label: "年生产经验" },

@@ -168,7 +168,7 @@ ${meta.keywords ? `<meta name="keywords" content="${esc(meta.keywords)}">` : ""}
 <meta property="og:type" content="website">
 <meta property="og:title" content="${esc(meta.title)}">
 <meta property="og:description" content="${esc(desc)}">
-<meta property="og:image" content="${meta.image || `${SITE}/assets/${IMAGES.meshRolls}`}">
+<meta property="og:image" content="${meta.image || `${SITE}/assets/${IMAGES.hero}`}">
 <meta property="og:url" content="${canonical}">
 <meta name="theme-color" content="#15171a">
 <link rel="icon" href="${ctx.asset("img/favicon.svg")}" type="image/svg+xml">
@@ -289,6 +289,21 @@ function ctaBand(ctx) {
 </section>`;
 }
 
+/* Full-bleed material band. */
+function macroBlock(ctx) {
+  const t = T[ctx.lang];
+  return `<section class="macro">
+  <img src="${ctx.asset(IMAGES.macro)}" alt="" width="1200" height="1200" loading="lazy">
+  <div class="shell macro__inner">
+    <div class="macro__text" data-reveal>
+      <span class="eyebrow">${esc(t.macroEyebrow)}</span>
+      <p>${esc(t.macroText)}</p>
+    </div>
+    <div class="macro__meta" data-reveal>${t.macroMeta.map(esc).join("<br>")}</div>
+  </div>
+</section>`;
+}
+
 /* Graphic tile used where no photograph exists yet. */
 function tile(no, name) {
   return `<div class="media-tile">
@@ -336,29 +351,26 @@ function homePage(ctx) {
   const c = COMPANY[ctx.lang];
 
   const body = `<section class="hero">
-  <div class="hero__pattern" aria-hidden="true"></div>
+  <div class="hero__media">
+    <img src="${ctx.asset(IMAGES.hero)}" alt="${esc(
+      ctx.lang === "cn"
+        ? "玻纤网格胶带成品卷"
+        : "Fiberglass mesh tape rolls"
+    )}" width="2400" height="1350" fetchpriority="high">
+  </div>
   <div class="shell hero__inner">
-    <div class="hero__grid">
-      <div class="hero__copy">
-        <span class="eyebrow hero__eyebrow">${esc(t.heroEyebrow)}</span>
-        <h1 class="hero__title">${esc(t.heroTitle)}</h1>
-        <div class="hero__bottom">
-          <p class="hero__lede">${esc(t.heroLede)}</p>
-          <div class="hero__actions">
-            <a class="btn" href="${ctx.href("products")}">${esc(t.heroCta)}<span class="arrow" aria-hidden="true">→</span></a>
-            <a class="btn btn--ghost" href="${ctx.href("contact")}">${esc(t.heroCta2)}</a>
-          </div>
-        </div>
+    <div class="hero__copy">
+      <span class="eyebrow hero__eyebrow">${esc(t.heroEyebrow)}</span>
+      <h1 class="hero__title">${esc(t.heroTitle)}</h1>
+      <p class="hero__lede">${esc(t.heroLede)}</p>
+      <div class="hero__actions">
+        <a class="btn" href="${ctx.href("products")}">${esc(t.heroCta)}<span class="arrow" aria-hidden="true">→</span></a>
+        <a class="btn btn--ghost" href="${ctx.href("contact")}">${esc(t.heroCta2)}</a>
       </div>
-      <figure class="hero__plate">
-        <img src="${ctx.asset(IMAGES.meshRolls)}" alt="${esc(
-          ctx.lang === "cn"
-            ? "高朋建材生产的玻纤网格胶带成品卷"
-            : "Fiberglass mesh tape rolls produced by Gaopeng"
-        )}" width="1024" height="683">
-        <figcaption><span>Fiberglass mesh tape</span><span>8x8 – 10x10 / inch</span></figcaption>
-      </figure>
     </div>
+    <div class="hero__spec">${t.heroSpec
+      .map((s) => `<div><strong>${esc(s.t)}</strong><em>${esc(s.s)}</em></div>`)
+      .join("")}</div>
   </div>
 </section>
 
@@ -397,6 +409,8 @@ ${capabilityBlock(ctx)}
     <div class="product-rows">${productRows(ctx, PRODUCTS)}</div>
   </div>
 </section>
+
+${macroBlock(ctx)}
 
 ${qualityBlock(ctx)}
 
@@ -504,6 +518,8 @@ ${capabilityBlock(ctx)}
     )}</div>
   </div>
 </section>
+
+${macroBlock(ctx)}
 
 ${qualityBlock(ctx)}
 
@@ -676,7 +692,7 @@ ${ctaBand(ctx)}`;
 
   const ogImage = photo
     ? `${SITE}/assets/${photo}`
-    : `${SITE}/assets/${IMAGES.meshRolls}`;
+    : `${SITE}/assets/${IMAGES.hero}`;
 
   return {
     logical: `products/${product.slug}`,
