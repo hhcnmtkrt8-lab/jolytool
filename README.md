@@ -54,4 +54,4 @@ npx serve .
 4. 根目录 `.htaccess` 已配置：自定义 404、gzip 压缩、静态缓存策略，并屏蔽 `.git` 与 `tools/` 目录。
 5. `tools/` 只是本地生成页面用，线上不参与运行，可不部署。
 
-注意：所有页面已写好 `canonical` 与 `hreflang`，指向 `https://www.asiagaopeng.com`。若先用临时域名预览，搜索引擎收录前记得把域名定好。
+注意：所有页面已写好 `canonical` 与 `hreflang`，指向 `https://asiajoly.com`。如果更换正式域名，改 `tools/build.mjs` 里的 `SITE` 常量后重新构建即可。

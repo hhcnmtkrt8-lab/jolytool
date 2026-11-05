@@ -11,7 +11,7 @@ import {
 } from "./content.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const SITE = "https://www.asiagaopeng.com";
+const SITE = "https://asiajoly.com";
 
 const esc = (s = "") =>
   String(s)
@@ -28,6 +28,13 @@ const logicalToFile = (lang, logical) => {
 
 const rel = (fromDir, target) =>
   path.posix.relative(fromDir === "" ? "." : fromDir, target);
+
+/* Public URL path: directories collapse to a trailing slash. */
+const publicPath = (lang, logical) => {
+  if (logical === "index") return lang === "cn" ? "/cn/" : "/";
+  if (logical === "404") return lang === "cn" ? "/cn/404.html" : "/404.html";
+  return "/" + logicalToFile(lang, logical);
+};
 
 function makeCtx(lang, logical, active) {
   const depth = logical.split("/").length - 1;
@@ -153,7 +160,7 @@ function footer(ctx) {
 
 function layout(ctx, meta) {
   const t = T[ctx.lang];
-  const canonical = `${SITE}/${logicalToFile(ctx.lang, meta.logical)}`;
+  const canonical = `${SITE}${publicPath(ctx.lang, meta.logical)}`;
   const desc = meta.description;
 
   return `<!DOCTYPE html>
@@ -944,8 +951,8 @@ const today = new Date().toISOString().slice(0, 10);
 const logicals = [...new Set(pages.map(([, page]) => page.logical))];
 const sitemapEntries = logicals
   .map((logical) => {
-    const en = `${SITE}/${logicalToFile("en", logical)}`;
-    const cn = `${SITE}/${logicalToFile("cn", logical)}`;
+    const en = `${SITE}${publicPath("en", logical)}`;
+    const cn = `${SITE}${publicPath("cn", logical)}`;
     return [en, cn]
       .map(
         (loc) => `  <url>
