@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800" role="img" aria-label="Large roll of alkali-resistant fiberglass mesh">
+  <defs>
+    <pattern id="mesh" width="14" height="14" patternUnits="userSpaceOnUse">
+      <rect width="14" height="14" fill="#f8f6f0"/>
+      <path d="M0 0H14M0 0V14" stroke="#c9c3b2" stroke-width="1.2"/>
+    </pattern>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fbf9f4"/>
+      <stop offset="0.45" stop-color="#f1ede2"/>
+      <stop offset="1" stop-color="#c7beab"/>
+    </linearGradient>
+    <radialGradient id="cap" cx="0.4" cy="0.3" r="0.9">
+      <stop offset="0" stop-color="#fdfbf6"/>
+      <stop offset="1" stop-color="#e4ded0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="16"/></filter>
+    <clipPath id="clipBody"><rect x="230" y="300" width="340" height="260"/></clipPath>
+  </defs>
+  <rect width="800" height="800" fill="#f1eee6"/>
+  <g transform="translate(-122 -237) scale(1.41)">
+  <ellipse cx="400" cy="588" rx="215" ry="26" fill="#1b1e22" opacity="0.10" filter="url(#soft)"/>
+
+  <rect x="230" y="300" width="340" height="252" fill="url(#body)"/>
+  <g clip-path="url(#clipBody)">
+    <rect x="230" y="300" width="340" height="252" fill="url(#mesh)" opacity="0.85"/>
+  </g>
+  <path d="M570 300 V552" stroke="#bcb3a0" stroke-width="2"/>
+  <ellipse cx="230" cy="426" rx="58" ry="126" fill="url(#cap)" stroke="#bcb3a0" stroke-width="2"/>
+  <ellipse cx="230" cy="426" rx="30" ry="66" fill="#efece4" stroke="#bcb3a0" stroke-width="2"/>
+  <path d="M230 360 v-6" stroke="#b2471f" stroke-width="2" opacity="0.7"/>
+  <path d="M230 492 v6" stroke="#b2471f" stroke-width="2" opacity="0.7"/>
+  </g>
+</svg>

@@ -99,6 +99,17 @@ ol {
   color: #fff;
 }
 
+/* Fine paper grain over the whole page. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
 /* --------------------------------------------------------------------------
    3. Layout primitives
    -------------------------------------------------------------------------- */
@@ -790,6 +801,31 @@ ol {
   align-items: start;
 }
 
+.product-row--thumb {
+  grid-template-columns: 58px 42px minmax(0, 1fr) auto;
+}
+
+.product-row__thumb {
+  display: block;
+  width: 58px;
+  height: 58px;
+  border: 1px solid var(--line);
+  background: #f1eee6;
+  overflow: hidden;
+}
+
+.product-row__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.55);
+  transition: transform 0.6s var(--ease);
+}
+
+.product-row:hover .product-row__thumb img {
+  transform: scale(1.7);
+}
+
 .product-row--news .product-row__no {
   white-space: nowrap;
   font-size: 12px;
@@ -803,6 +839,63 @@ ol {
 .product-row:hover .product-row__arrow {
   transform: translateX(6px);
   color: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   11b. Product grid (catalogue)
+   -------------------------------------------------------------------------- */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(22px, 2.6vw, 34px) clamp(16px, 2vw, 28px);
+}
+
+.product-tile {
+  display: block;
+}
+
+.product-tile__media {
+  display: block;
+  background: #f1eee6;
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.product-tile__media img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  transition: transform 1.1s var(--ease);
+}
+
+.product-tile:hover .product-tile__media img {
+  transform: scale(1.035);
+}
+
+.product-tile__no {
+  display: block;
+  margin-top: 14px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  color: var(--accent);
+}
+
+.product-tile__name {
+  display: block;
+  margin-top: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  line-height: 1.32;
+}
+
+.product-tile__meta {
+  display: block;
+  margin-top: 7px;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.45;
 }
 
 /* --------------------------------------------------------------------------
@@ -1273,6 +1366,10 @@ ol {
     grid-template-columns: 1fr;
   }
 
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .products-intro {
     position: static;
   }
@@ -1423,5 +1520,19 @@ ol {
 
   .product-row--news {
     grid-template-columns: max-content minmax(0, 1fr) auto;
+  }
+
+  .product-row--thumb {
+    grid-template-columns: 44px minmax(0, 1fr) auto;
+    gap: 14px;
+  }
+
+  .product-row--thumb .product-row__no {
+    display: none;
+  }
+
+  .product-row__thumb {
+    width: 44px;
+    height: 44px;
   }
 }

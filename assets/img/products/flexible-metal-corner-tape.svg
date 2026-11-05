@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800" role="img" aria-label="Flexible metal corner tape with two galvanized strips">
+  <defs>
+    <linearGradient id="steel" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#b9b7b1"/>
+      <stop offset="0.4" stop-color="#ecebe7"/>
+      <stop offset="1" stop-color="#a9a7a1"/>
+    </linearGradient>
+    <pattern id="paper" width="24" height="24" patternUnits="userSpaceOnUse">
+      <rect width="24" height="24" fill="#f6f2e7"/>
+      <circle cx="12" cy="12" r="2.2" fill="#c7beab"/>
+    </pattern>
+    <filter id="soft"><feGaussianBlur stdDeviation="16"/></filter>
+  </defs>
+  <rect width="800" height="800" fill="#f1eee6"/>
+  <g transform="translate(-144 -65) scale(1.12)">
+  <ellipse cx="430" cy="640" rx="230" ry="24" fill="#1b1e22" opacity="0.09" filter="url(#soft)"/>
+
+  <path d="M270 165 H440 V460 H700 V600 H270 Z" fill="url(#paper)" stroke="#bcb3a0" stroke-width="2"/>
+
+  <rect x="288" y="182" width="14" height="418" fill="url(#steel)" stroke="#9d9b95" stroke-width="1"/>
+  <rect x="418" y="182" width="14" height="278" fill="url(#steel)" stroke="#9d9b95" stroke-width="1"/>
+  <rect x="452" y="468" width="248" height="14" fill="url(#steel)" stroke="#9d9b95" stroke-width="1"/>
+  <rect x="452" y="586" width="248" height="14" fill="url(#steel)" stroke="#9d9b95" stroke-width="1"/>
+
+  <path d="M432 460 L432 486 L458 460 Z" fill="#b2471f" opacity="0.85"/>
+  <path d="M270 600 H700" stroke="#b2471f" stroke-width="3" opacity="0.35"/>
+  </g>
+</svg>

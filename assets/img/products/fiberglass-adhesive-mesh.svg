@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800" role="img" aria-label="Self-adhesive fiberglass mesh sheet with folded corner">
+  <defs>
+    <pattern id="mesh" width="18" height="18" patternUnits="userSpaceOnUse">
+      <rect width="18" height="18" fill="#f8f6f0"/>
+      <path d="M0 0H18M0 0V18" stroke="#b6ad99" stroke-width="1.4"/>
+    </pattern>
+    <linearGradient id="fold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#efeadd"/>
+      <stop offset="1" stop-color="#ddd6c5"/>
+    </linearGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="16"/></filter>
+  </defs>
+  <rect width="800" height="800" fill="#f1eee6"/>
+  <g transform="translate(-78 -87) scale(1.19)">
+  <ellipse cx="390" cy="600" rx="215" ry="26" fill="#1b1e22" opacity="0.09" filter="url(#soft)"/>
+
+  <g transform="rotate(-7 400 400)">
+    <rect x="185" y="235" width="430" height="345" fill="url(#mesh)" stroke="#bcb3a0" stroke-width="2"/>
+    <path d="M418 580 H615 V470 Z" fill="url(#fold)" stroke="#bcb3a0" stroke-width="2"/>
+    <path d="M418 580 L615 470" stroke="#b2471f" stroke-width="2" opacity="0.5"/>
+    <rect x="185" y="558" width="430" height="22" fill="#b2471f" opacity="0.16"/>
+  </g>
+
+  <g fill="#1b1e22" opacity="0.35">
+    <circle cx="240" cy="300" r="3"/>
+    <circle cx="640" cy="700" r="3"/>
+  </g>
+  </g>
+</svg>

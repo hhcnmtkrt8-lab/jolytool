@@ -171,7 +171,7 @@ ${meta.keywords ? `<meta name="keywords" content="${esc(meta.keywords)}">` : ""}
 <meta property="og:image" content="${meta.image || `${SITE}/assets/${IMAGES.meshRolls}`}">
 <meta property="og:url" content="${canonical}">
 <meta name="theme-color" content="#15171a">
-<link rel="preconnect" href="https://coresg-normal.trae.ai">
+<link rel="icon" href="${ctx.asset("img/favicon.svg")}" type="image/svg+xml">
 <link rel="stylesheet" href="${ctx.asset("css/main.css")}">
 </head>
 <body>
@@ -251,7 +251,15 @@ function productRows(ctx, products) {
   return products
     .map((p, i) => {
       const d = p[ctx.lang];
-      return `<a class="product-row" href="${ctx.href(`products/${p.slug}`)}" data-reveal>
+      const img = productImage(p.slug);
+      return `<a class="product-row product-row--thumb" href="${ctx.href(
+        `products/${p.slug}`
+      )}" data-reveal>
+      <span class="product-row__thumb">${
+        img
+          ? `<img src="${ctx.asset(img)}" alt="" width="56" height="56" loading="lazy">`
+          : ""
+      }</span>
       <span class="product-row__no">${String(i + 1).padStart(2, "0")}</span>
       <span>
         <span class="product-row__name">${esc(d.name)}</span>
@@ -287,6 +295,38 @@ function tile(no, name) {
       <span class="media-tile__no">${esc(String(no).padStart(2, "0"))}</span>
       <span class="media-tile__name">${esc(name)}</span>
     </div>`;
+}
+
+/* Resolve a product visual: real photo first, then vector illustration. */
+function productImage(slug) {
+  for (const ext of ["jpg", "png", "svg"]) {
+    const p = `img/products/${slug}.${ext}`;
+    if (fs.existsSync(path.join(root, "assets", p))) return p;
+  }
+  return null;
+}
+
+function productGrid(ctx) {
+  const items = PRODUCTS.map((product, i) => {
+    const d = product[ctx.lang];
+    const img = productImage(product.slug);
+    return `<a class="product-tile" href="${ctx.href(
+      `products/${product.slug}`
+    )}" data-reveal>
+      <span class="product-tile__media">${
+        img
+          ? `<img src="${ctx.asset(img)}" alt="${esc(
+              d.name
+            )}" width="800" height="800" loading="lazy">`
+          : tile(i + 1, d.name)
+      }</span>
+      <span class="product-tile__no">${String(i + 1).padStart(2, "0")}</span>
+      <span class="product-tile__name">${esc(d.name)}</span>
+      <span class="product-tile__meta">${esc(d.short)}</span>
+    </a>`;
+  }).join("");
+
+  return `<div class="product-grid">${items}</div>`;
 }
 
 /* ---------- pages ---------- */
@@ -519,7 +559,7 @@ function productsPage(ctx) {
 
 <section class="section">
   <div class="shell">
-    <div class="product-rows">${productRows(ctx, PRODUCTS)}</div>
+    ${productGrid(ctx)}
   </div>
 </section>
 
@@ -542,8 +582,7 @@ function productPage(ctx, product) {
   const t = T[ctx.lang];
   const d = product[ctx.lang];
   const index = PRODUCTS.indexOf(product) + 1;
-  const photo = `img/products/${product.slug}.jpg`;
-  const hasPhoto = fs.existsSync(path.join(root, "assets", photo));
+  const photo = productImage(product.slug);
   const others = PRODUCTS.filter((p) => p.slug !== product.slug).slice(0, 3);
 
   const bullets = d.bullets.length
@@ -592,10 +631,10 @@ function productPage(ctx, product) {
     <div class="pd">
       <div class="pd__media" data-reveal>
         ${
-          hasPhoto
+          photo
             ? `<img src="${ctx.asset(photo)}" alt="${esc(
                 d.name
-              )}" width="1000" height="1000">`
+              )}" width="800" height="800">`
             : tile(index, d.name)
         }
       </div>
@@ -635,7 +674,9 @@ function productPage(ctx, product) {
 
 ${ctaBand(ctx)}`;
 
-  const ogImage = hasPhoto ? `${SITE}/assets/${photo}` : `${SITE}/assets/${IMAGES.meshRolls}`;
+  const ogImage = photo
+    ? `${SITE}/assets/${photo}`
+    : `${SITE}/assets/${IMAGES.meshRolls}`;
 
   return {
     logical: `products/${product.slug}`,
@@ -812,6 +853,29 @@ ${ctaBand(ctx)}`;
   };
 }
 
+/* ---------- 404 ---------- */
+
+function notFoundPage(ctx) {
+  const body = `<section class="section" style="min-height:calc(100svh - 300px);display:flex;align-items:center">
+  <div class="shell">
+    <span class="eyebrow">Error 404</span>
+    <h1 class="display" style="margin-top:24px">Page not found · 页面不存在</h1>
+    <p class="lede" style="margin-top:20px">The page you are looking for has moved or never existed.<br>您访问的页面已移动或不存在。</p>
+    <div class="hero__actions" style="margin-top:32px">
+      <a class="btn" href="${ctx.href("index")}">Home / 首页<span class="arrow" aria-hidden="true">→</span></a>
+      <a class="btn btn--ghost" href="${ctx.href("products")}">Products / 产品中心</a>
+    </div>
+  </div>
+</section>`;
+
+  return {
+    logical: "404",
+    title: "404 | GOPEX",
+    description: "Page not found.",
+    body,
+  };
+}
+
 /* ---------- emit ---------- */
 
 const pages = [];
@@ -849,5 +913,50 @@ for (const [ctx, page] of pages) {
   fs.writeFileSync(target, layout(ctx, page), "utf8");
   written += 1;
 }
+
+/* 404 */
+for (const lang of ["en", "cn"]) {
+  const ctx404 = makeCtx(lang, "404", "home");
+  const target = path.join(root, logicalToFile(lang, "404"));
+  fs.mkdirSync(path.dirname(target), { recursive: true });
+  fs.writeFileSync(target, layout(ctx404, notFoundPage(ctx404)), "utf8");
+  written += 1;
+}
+
+/* robots + sitemap */
+const today = new Date().toISOString().slice(0, 10);
+const logicals = [...new Set(pages.map(([, page]) => page.logical))];
+const sitemapEntries = logicals
+  .map((logical) => {
+    const en = `${SITE}/${logicalToFile("en", logical)}`;
+    const cn = `${SITE}/${logicalToFile("cn", logical)}`;
+    return [en, cn]
+      .map(
+        (loc) => `  <url>
+    <loc>${loc}</loc>
+    <lastmod>${today}</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="${en}"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="${cn}"/>
+  </url>`
+      )
+      .join("\n");
+  })
+  .join("\n");
+
+fs.writeFileSync(
+  path.join(root, "sitemap.xml"),
+  `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${sitemapEntries}
+</urlset>
+`,
+  "utf8"
+);
+
+fs.writeFileSync(
+  path.join(root, "robots.txt"),
+  `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`,
+  "utf8"
+);
 
 console.log(`Generated ${written} pages.`);

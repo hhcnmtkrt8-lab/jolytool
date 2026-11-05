@@ -1,0 +1,33 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800" role="img" aria-label="Roll of perforated paper joint tape">
+  <defs>
+    <linearGradient id="side" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#e6dfd0"/>
+      <stop offset="0.4" stop-color="#faf6ec"/>
+      <stop offset="1" stop-color="#ded7c7"/>
+    </linearGradient>
+    <linearGradient id="top" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fffdf8"/>
+      <stop offset="1" stop-color="#eee8db"/>
+    </linearGradient>
+    <pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse">
+      <rect width="20" height="20" fill="#f7f3e9"/>
+      <circle cx="10" cy="10" r="2.4" fill="#d6cfbe"/>
+    </pattern>
+    <filter id="soft"><feGaussianBlur stdDeviation="16"/></filter>
+  </defs>
+  <rect width="800" height="800" fill="#f1eee6"/>
+  <g transform="translate(-56 -64) scale(1.04)">
+  <ellipse cx="320" cy="610" rx="150" ry="24" fill="#1b1e22" opacity="0.10" filter="url(#soft)"/>
+
+  <g transform="rotate(4 560 480)">
+    <rect x="460" y="420" width="250" height="96" fill="url(#dots)" stroke="#c0b7a4" stroke-width="2"/>
+    <rect x="460" y="504" width="250" height="10" fill="#b2471f" opacity="0.45"/>
+  </g>
+
+  <path d="M170 300 V590 A150 40 0 0 1 470 590 V300 Z" fill="url(#side)"/>
+  <path d="M170 300 V590 A150 40 0 0 1 470 590 V300 Z" fill="url(#dots)" opacity="0.55"/>
+  <ellipse cx="320" cy="300" rx="150" ry="40" fill="url(#top)" stroke="#c0b7a4" stroke-width="2"/>
+  <ellipse cx="320" cy="300" rx="44" ry="11" fill="#efece4" stroke="#c0b7a4" stroke-width="2"/>
+  <path d="M320 280 v-8" stroke="#b2471f" stroke-width="2" opacity="0.6"/>
+  </g>
+</svg>

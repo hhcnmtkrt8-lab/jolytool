@@ -31,9 +31,11 @@ node tools/build.mjs
 
 生成结果会覆盖根目录与 `cn/` 下的 HTML，请勿直接手改生成的 HTML。
 
-## 补充产品图片
+## 产品图片
 
-在 `assets/img/products/` 放入 `<产品slug>.jpg`（如 `wall-patch.jpg`），重新执行构建后该产品详情页会自动使用照片，否则显示网布纹理图形占位。
+每个产品默认使用 `assets/img/products/<slug>.svg` 矢量产品图。拿到实拍照片后，直接在 `assets/img/products/` 放入同名 `.jpg`，重新执行构建即可自动优先使用照片，无需改代码。
+
+产品图同时用于：产品中心网格、首页/相关产品列表缩略图、产品详情主图。
 
 ## 本地预览
 
