@@ -1,0 +1,8 @@
+# 后台密码与备份不进仓库，避免每次部署覆盖服务器上的修改
+data/admin.json
+data/*.tmp
+data/backups/*.json
+!data/backups/.gitkeep
+
+.DS_Store
+Thumbs.db

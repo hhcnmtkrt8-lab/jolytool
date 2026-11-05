@@ -1,57 +1,51 @@
-# 南通高朋建材（GOPEX）官网
+# GOPEX 网站（PHP 版，带后台）
 
-英文站 + 中文站的企业官网，纯静态多页站点（HTML / CSS / JS），可直接托管到 GitHub Pages 或原站服务器。
+南通高朋建材有限公司官网，中英文双语。纯 PHP + JSON 存储，**不需要数据库**，上传到主机即可运行。
 
-- 英文站：`/`
-- 中文站：`/cn/`
+## 一、本地测试
 
-## 页面结构
-
-- 首页、关于我们、产品中心、新闻资讯、联系我们（中英各一套）
-- 8 个产品详情页：玻纤自粘胶带、玻纤自粘网格布、玻纤网格布、金属护角带、接缝纸带、玻纤水泥板胶带、玻纤毡带、金属补墙板
-- 1 篇新闻详情：第 122 届广交会
-
-页面文案与规格表取自原站 asiagaopeng.com 的中英文内容，只做了排版与标点规范化，未改动数据。
-
-## 目录
-
-```
-assets/css/main.css     设计系统与全部样式
-assets/js/main.js       导航、滚动显现等交互
-assets/img/             图片资源
-tools/content.mjs       中英文案与产品数据（唯一内容源）
-tools/build.mjs         生成全部 HTML 页面
+```powershell
+d:\TRAE\1\.tools\php\php.exe -S 127.0.0.1:8080 -t d:\TRAE\1\gopex-php d:\TRAE\1\gopex-php\router.php
 ```
 
-## 修改内容后重新生成
+- 英文站：http://127.0.0.1:8080/
+- 中文站：http://127.0.0.1:8080/cn/
+- 后台：http://127.0.0.1:8080/admin/
 
-```bash
-node tools/build.mjs
-```
+## 二、部署到 Hostinger
 
-生成结果会覆盖根目录与 `cn/` 下的 HTML，请勿直接手改生成的 HTML。
+1. hPanel → 网站 → 文件管理（或 FTP），进入 `public_html`。
+2. 把本目录**里面的全部内容**（不是整个文件夹）上传到 `public_html`。
+3. PHP 版本选 8.1 或更高（hPanel → 高级 → PHP 配置）。
+4. 确认这几个目录可写（一般默认即可）：
+   - `data/`
+   - `assets/img/`
+   - `assets/img/products/`
+5. 打开 `https://asiajoly.com/admin/`，用初始密码 `admin888` 登录，然后立刻在「修改密码」里换掉。
 
-## 产品图片
+不需要 Node.js，不需要建数据库，`.htaccess` 已包含路由与压缩规则。
 
-页面实际引用 `assets/img/products/<slug>.jpg`；同名 `.svg` 是可编辑的矢量源文件。修改 SVG 后需重新导出 JPG，否则页面不会变化。
+## 三、后台怎么用
 
-拿到实拍照片后，直接用同名 `.jpg` 覆盖即可（建议 1200×1200，深色底板或自行抠底），无需改代码。产品图同时用于产品中心网格、列表缩略图与详情页主图。
+| 菜单 | 作用 |
+| --- | --- |
+| 页面文字 | 先选「英文站 / 中文站」，再选页面（首页、关于、产品中心、新闻、联系、导航页脚），改完点保存 |
+| 产品 | 8 个产品，可改名称、简介、特点、用途和规格表；规格表每行一条，用 `|` 分列 |
+| 新闻 | 新增 / 修改 / 删除新闻，网址根据英文标题自动生成 |
+| 图片 | 替换首页大图、材料特写图和每个产品图 |
+| 联系方式 | 电话、传真、邮箱、Skype、WhatsApp、地址（中英文共用） |
+| 修改密码 | 更换后台密码 |
 
-## 本地预览
+保存后立即生效，刷新前台就能看到，不需要重新发布。
 
-```bash
-npx serve .
-# 或任意静态服务器，例如 python -m http.server
-```
+## 四、数据与备份
 
-## 部署到 Hostinger
+- 所有文字与联系方式存在 `data/content.json`。
+- 每次保存前会自动备份到 `data/backups/`，保留最近 40 份。
+- 仪表盘底部可以一键恢复到任意备份。
 
-站点是纯静态的，不需要 Node 环境，也不需要构建。
+## 五、注意事项
 
-1. hPanel → 网站 → Git，仓库填 `https://github.com/hhcnmtkrt8-lab/jolytool.git`，分支 `main`，目标目录 `public_html`。
-2. 首次拉取后直接访问域名即可。`index.html` 在仓库根目录，可直接作为站点根。
-3. 后续更新：hPanel 点「拉取」，或在服务器目录执行 `git pull`。
-4. 根目录 `.htaccess` 已配置：自定义 404、gzip 压缩、静态缓存策略，并屏蔽 `.git` 与 `tools/` 目录。
-5. `tools/` 只是本地生成页面用，线上不参与运行，可不部署。
-
-注意：所有页面已写好 `canonical` 与 `hreflang`，指向 `https://asiajoly.com`。如果更换正式域名，改 `tools/build.mjs` 里的 `SITE` 常量后重新构建即可。
+- `data/` 与 `includes/` 已在 `.htaccess` 里禁止外部访问，请勿删除该文件。
+- 换域名时，把 `includes/bootstrap.php` 里的 `SITE_URL` 改成新域名（影响 SEO 规范链接与分享缩略图）。
+- 后台上传的图片会自动压缩并转为 JPG，原图无需处理。
